@@ -1,43 +1,167 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Quiz-application by fisayomi</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    
+    <title>Welcome to Firebase Hosting</title>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCKeQtsr3piRY1a2Z_SRnC9Mugoh13X7mc",
+        authDomain: "quiz-application-76fd2.firebaseapp.com",
+        databaseURL: "https://quiz-application-76fd2.firebaseio.com",
+        storageBucket: "quiz-application-76fd2.appspot.com",
+        messagingSenderId: "626545819362"
+      }
+      firebase.initializeApp(config);
+
+     // var defaultDatabase = firebase.database().ref("questions");
+
+     function checkName(){
+      var user = document.getElementById('username').value;
+      console.log(user);
+      
+        var ref = firebase.database().ref("users");
+        ref.once("value")
+          .then(function(snapshot) {
+            var found = false;
+            var snap = snapshot.val();
+            for(val in snap){
+              console.log(snap[val]);
+                for(var value2 in snap[val]){
+                  console.log(snap[val][value2]);
+                  if(value2 == "username"){
+                      if(snap[val][value2] === user){
+                        console.log(user);
+                        console.log(snap[val][value2])
+                        found = true;
+                    }
+                  }
+                  
+                }
+            }
+
+            if(found){
+               window.location.href = 'homePage.html';
+            }
+            else{
+              //alert('You are not a registered user, Kindly register to continue')
+            }
+
+          });
+
+          
+     }
+
+     
+    
+    </script>
+
+    
+    <style media="screen">
+      body {
+        font-family: Roboto, Arial, sans-serif;
+        background: #ECEFF1;
+        color: rgba(0,0,0,0.87);
+      }
+
+      a {
+        color: rgb(3,155,229);
+      }
+
+      #message {
+        max-width: 400px;
+        margin: 40px auto;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2),0 1px 1px 0 rgba(0,0,0,0.14),0 2px 1px -1px rgba(0,0,0,0.12);
+        border-radius: 2px;
+        background: white;
+        padding: 16px 24px;
+      }
+
+      #message h1 {
+        font-size: 22px;
+        font-weight: 500;
+        text-align: center;
+        margin: 0 0 16px;
+      }
+
+      #message p {
+        font-weight: 300;
+        line-height: 150%;
+      }
+
+      #message ul {
+        list-style: none;
+        margin: 16px 0 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      #message li {
+        display: inline-block;
+        padding: 8px;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: 500;
+        background: rgb(3,155,229);
+        color: blue;
+        border: 1px solid rgb(3,155,229);
+        border-radius: 3px;
+        font-size: 14px;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+      }
+
+
+    </style>
+   
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1 class="header">Quiz-application</h1>
-        <p class="header"></p>
+    <div id="message">
+      <h1> Welcome to our Quiz Application</h1>
+      <p> Please Login to continue</p>
+      <div>
+        <form>
+          <table>
+            <tr>
+              <td> Username </td>
+              <td> <input type = "text" name = "username" id = "username"></td>
+            </tr>
 
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/fisayomi/Quiz-Application/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/fisayomi/Quiz-Application/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/fisayomi/Quiz-Application">View On GitHub</a></li>
-        </ul>
+            <tr>
+              <td> Password </td>
+              <td> <input type = "password" id = "password"> </td>
+            </tr>
 
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/fisayomi">fisayomi</a></p>
+          </table>
+        </form>
 
+      </div>
+      <ul>
+        <li>  <input type = "submit"  id = "submit" value = "LOGIN" onclick = 'checkName()'> </li>
+      </ul>
 
-      </header>
-      <section>
-        <h3>
-<a id="welcome-to-our-quiz-application-" class="anchor" href="#welcome-to-our-quiz-application-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to our Quiz Application ###.</h3>
-      </section>
-      <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
-      </footer>
+      <div>
+          <table>
+            <tr> </tr>
+            <tr>
+              <td> Not a User ?  </td>
+             <td> <input type = "submit"  id = "register" value = "REGISTER" onclick = "location.href= 'register.html';"> </td>
+            </tr>
+
+          </table>
+      </div>
+      <a href=""></a>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
   </body>
 </html>
