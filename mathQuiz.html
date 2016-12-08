@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fjalla+One" rel="stylesheet">
 
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
 
@@ -68,13 +68,15 @@
           submit.setAttribute('onclick', 'getSelectedValues()');
           document.getElementById(quest).appendChild(document.createElement('br'));
           document.getElementById(quest).appendChild(submit);
+
+           document.getElementById("la").innerHTML = "Choose the right answer to each question ";
           
       });
   </script>
   
   </head>
 
-  <body>
+  <body style = "background-color :CornflowerBlue">
 
     <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -85,10 +87,12 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-center" >
-      <label class="navbar-brand " id = "display2">
-      </label>
-      <label class="navbar-brand " >
+      <ul class=" navbar-brand nav navbar-nav navbar-right" >
+        <label  id = "display2">
+        </label>
+      </ul>
+    <ul class = "navbar-brand navbar-center">
+      <label id = "la">
         Your Quiz will start shortly!! 
       </label>
     </ul>
@@ -103,7 +107,7 @@
     
     <script type="text/javascript">
       var user = window.sessionStorage.getItem("user");
-      document.getElementById("display2").innerHTML = " Welcome " + user;
+      document.getElementById("display2").innerHTML = " Signed in as " + user;
     </script>
 
       <div id = "display"  class = "col-md-6 col-md-offset-3" >
