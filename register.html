@@ -26,8 +26,23 @@
         var userPassword = document.getElementById('password').value;
         var userPassword2 = document.getElementById('password2').value;
         var userEmail = document.getElementById('email').value;
+        if(username == ""){
+          document.getElementById("find").innerHTML = "Kindly fill all fields";
+        } 
+        else if (userPassword == ""){
+         
+          document.getElementById("find").innerHTML = "Kindly fill all fields";
+        }
+        else if (userPassword2 == ""){
+          document.getElementById("find").innerHTML = "Kindly fill all fields";
+        }
+        else if (userEmail == "" ){
+          document.getElementById("find").innerHTML = "Kindly fill all fields";
+        }
 
-        if(userPassword ===userPassword2 ){
+        else {
+
+          if(userPassword ===userPassword2 ){
           var ref = firebase.database().ref("users");
           ref.once("value")
           .then(function(snapshot) {
@@ -42,9 +57,7 @@
                       if(snap[val][value2] === username){
                         found = true;
                     }
-                  }
-      
-                  
+                  }            
                 }
             }
             if (!found) {
@@ -60,21 +73,18 @@
             }
 
             else{
-
-              
+        
              // location.reload();
               document.getElementById("find").innerHTML = "The username exists, try another name";
             }
           });
 
-
-
         }
         else{
           document.getElementById("find").innerHTML = "Passwords does not match";
+        }     
+
         }
-        
-          
 
       }
           

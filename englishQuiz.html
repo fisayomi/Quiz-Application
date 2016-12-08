@@ -123,15 +123,12 @@
           var score = 0;
           var ref = firebase.database().ref("answers");           
           ref.once("value")
-          .then(function(snapshot) {
-              
+          .then(function(snapshot) {    
               var snap = snapshot.val();
               var inc = 0;
-              console.log(snapshot.val());
               for (key in snap){
                 var result = document.getElementsByName(inc.toString());
                 var trueAnswer = snap[key];
-                console.log(result);
                 var checkedRes;
                   for(var j = 0; j < result.length; j++){
                     if(result[j].checked){
