@@ -83,20 +83,26 @@
   </head>
   <body>
 
-    <div id = "display2"  class = "col-md-3 col-md-offset-9">
+        <div id = "display2" class = "col-md-6 col-md-offset-3">
+        </div>
 
-      </div>
+
+        <div  class = "col-md-6 col-md-offset-3">
+            Your Quiz will start shortly!!
+        </div>
+
+         
+        
+        
+
     
-    
+    <script type="text/javascript">
+      var user = window.sessionStorage.getItem("user");
+      document.getElementById("display2").innerHTML = " Welcome " + user;
+    </script>
+
       <div id = "display"  class = "col-md-6 col-md-offset-3" >
-        <h1>Hello, world!</h1>
-        <h2> Your Quiz will start shortly</h2>
-
       </div>
-      <div id = "sc">
-
-      </div>
-
       
     
 
@@ -130,22 +136,15 @@
             }
          
             console.log(score);
+            window.sessionStorage.setItem("score", score);
             document.getElementById('display2').innerHTML = "You scored " + score.toString();
+            window.location.href = 'score.html';
 
           }); 
-
-
       
     }
 
-
-
     </script>
-
-    
-  
-
-
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
