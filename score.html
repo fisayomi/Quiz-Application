@@ -67,7 +67,8 @@
         <script type="text/javascript">
        		 var score = window.sessionStorage.getItem("score");
        		 var user = window.sessionStorage.getItem("user");
-       		 document.getElementById('display').innerHTML = "Hello " + user + " You scored " +score;
+           var subject = window.sessionStorage.getItem("subject");
+       		 document.getElementById('display').innerHTML = "Hello " + user + " You scored " + score +" in " + subject;
 
         </script>
       <script type="text/javascript" src="javascripts/main.js"></script>

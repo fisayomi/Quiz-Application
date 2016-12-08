@@ -157,13 +157,14 @@
 
         var ref = firebase.database().ref("scores");
         var user = window.sessionStorage.getItem("user");
-        var eng = "English";
+        var subject = "English";
+        window.sessionStorage.setItem("subject", "English");
         ref.once("value")
           .then(function(snapshot) {
             ref.push({
                   "user": user,
                   "score": score,
-                  "Subject": eng,
+                  "Subject": subject,
                 });
 
           });
