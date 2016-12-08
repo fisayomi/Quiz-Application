@@ -8,9 +8,9 @@ The application should present the user with their final scores at the end of th
 Extra Credit
 Use firebase to persist data (as a datastore). For leaderboards and quiz questions/answers.
 
-Explanation of Pages
 
-Front End:
+
+Front End Dependencies:
 Index.html - This is the page that requires users to sign in. Only registered users can sign in. The details of the user is stored in Firebase database and the username of the user uniquely identifies the user. 
 
 Register.html - Here, a new user registers his/her details such as Username, email address and password. After registration, the user is directed to the homePage. 
