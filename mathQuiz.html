@@ -120,28 +120,32 @@
     
 
     <script type="text/javascript">
-      function getSelectedValues(e){
+     function getSelectedValues(e){
        console.log(questionLength);
         var arrayResult = [];
         for(var i = 0; i< questionLength; i++){
-          if(document.getElementsByName(i.toString()).checked){
-            arrayResult.push(i)
-          }
+           var arrayResult2 = document.getElementsByName(i.toString());
+           for (var j = 0; j < arrayResult2.length; j++){
+            if(arrayResult2[j].checked){
+              arrayResult.push(i);
+            }
+
+           }
         }
+        console.log(arrayResult.length)
 
         
         if(arrayResult.length != questionLength){
-          if(confirm("Are you sure you want to submit?")){
-            submitToFirebase();
+          if(confirm("Are you sure you want to submit? You have not answered some questions")){
+            submitToFirebase(); 
           }else{
             return
           }        
-        } else{
+        } else if (arrayResult.length === questionLength){
           submitToFirebase();
         }
       
     }
-
     
     function submitToFirebase(){
       var ref = firebase.database().ref("answers2"); 
@@ -191,6 +195,8 @@
                     });              
  
           }); 
+
+        window.sessionStorage.setItem("nOfQ", questionLength);
 
         
          

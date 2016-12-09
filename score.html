@@ -68,7 +68,8 @@
        		 var score = window.sessionStorage.getItem("score");
        		 var user = window.sessionStorage.getItem("user");
            var subject = window.sessionStorage.getItem("subject");
-       		 document.getElementById('display').innerHTML = "Hello " + user + " You scored " + score +" in " + subject;
+           var total = window.sessionStorage.getItem("nOfQ");
+       		 document.getElementById('display').innerHTML = "Hello " + user + " You scored " + score + "/" + total+ " in " + subject;
 
         </script>
       <script type="text/javascript" src="javascripts/main.js"></script>
