@@ -114,7 +114,7 @@
       document.getElementById("display2").innerHTML = " Signed in as " + user;
     </script>
 
-      <div id = "display"  class = "col-md-6 col-md-offset-3" >
+      <div id = "display"  class = "col-md-6 col-md-offset-3" style = "background-color:white">
       </div>
       
     
@@ -144,7 +144,6 @@
 
     
     function submitToFirebase(){
-
       var ref = firebase.database().ref("answers2"); 
           var score = 0;          
           ref.once("value")
@@ -155,7 +154,6 @@
               console.log(snapshot.val());
               for (key in snap){
                 var result = document.getElementsByName(inc.toString());
-                // var arrayResult = [];
                 var trueAnswer = snap[key];
                 console.log(result);
                 var checkedRes;
@@ -165,40 +163,37 @@
                                 
                     }
                   }
-
-                  console.log(trueAnswer);
                   
-                    if(checkedRes === trueAnswer){
+                  if(checkedRes === trueAnswer){
                     score++;
                   }
                         
                   inc++;
             }
 
-               
-                  console.log(score);
                   window.sessionStorage.setItem("score", score);
-                  document.getElementById('display2').innerHTML = "You scored " + score.toString();
-                  window.location.href = 'score.html';
-               
 
-         
-            
+
+                  var ref= firebase.database().ref("scores");
+                  var user = window.sessionStorage.getItem("user");
+                  var subject = "Mathematics";
+                  window.sessionStorage.setItem("subject", "Mathematics");
+                  ref.once("value")
+                    .then(function(snapshot) {
+                      console.log(snapshot.val());
+                      ref.push({
+                            "user": user,
+                            "score": score,
+                            "Subject": subject,
+                          });
+                      window.location.href = 'score.html';    
+
+                    });              
+ 
           }); 
 
-        var ref = firebase.database().ref("scores");
-        var user = window.sessionStorage.getItem("user");
-        var subject = "Mathematics";
-        window.sessionStorage.setItem("subject", "Mathematics");
-        ref.once("value")
-          .then(function(snapshot) {
-            ref.push({
-                  "user": user,
-                  "score": score,
-                  "Subject": subject,
-                });
-
-          });
+        
+         
     }
 
     </script>

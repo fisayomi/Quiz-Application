@@ -14,6 +14,7 @@
 
     <script>
       // Initialize Firebase
+      var questionLength;
       var config = {
         apiKey: "AIzaSyCKeQtsr3piRY1a2Z_SRnC9Mugoh13X7mc",
         authDomain: "quiz-application-76fd2.firebaseapp.com",
@@ -30,6 +31,7 @@
         var quest;
         var radioInput;
           var questAnswer = snapshot.val();
+          questionLength = questAnswer.length;
           for (var i = 0; i < questAnswer.length; i++) {
 
             for(var value in snapshot.val()[i]){
@@ -119,55 +121,81 @@
     
 
     <script type="text/javascript">
-      function getSelectedValues(){
-          var score = 0;
-          var ref = firebase.database().ref("answers");           
+
+     function getSelectedValues(e){
+       console.log(questionLength);
+        var arrayResult = [];
+        for(var i = 0; i< questionLength; i++){
+          if(document.getElementsByName(i.toString()).checked){
+            arrayResult.push(i)
+          }
+        }
+
+        
+        if(arrayResult.length != questionLength){
+          if(confirm("Are you sure you want to submit?")){
+            submitToFirebase();
+          }else{
+            return
+          }        
+        } else{
+          submitToFirebase();
+        }
+      
+    }
+     function submitToFirebase(){
+      var ref = firebase.database().ref("answers"); 
+          var score = 0;          
           ref.once("value")
-          .then(function(snapshot) {    
+          .then(function(snapshot) {
               var snap = snapshot.val();
               var inc = 0;
+              var unchecked = false;
+              console.log(snapshot.val());
               for (key in snap){
                 var result = document.getElementsByName(inc.toString());
                 var trueAnswer = snap[key];
+                console.log(result);
                 var checkedRes;
                   for(var j = 0; j < result.length; j++){
                     if(result[j].checked){
-                      checkedRes = result[j].value 
-                      console.log(checkedRes);            
+                      checkedRes = result[j].value;
+                                
                     }
                   }
-
-                  console.log(trueAnswer);
+                  
                   if(checkedRes === trueAnswer){
                     score++;
-                  } 
+                  }
+                        
                   inc++;
-
             }
-         
-            console.log(score);
-            window.sessionStorage.setItem("score", score);
-            document.getElementById('display2').innerHTML = "You scored " + score.toString();
-            window.location.href = 'score.html';
 
+                  window.sessionStorage.setItem("score", score);
+
+
+                  var ref= firebase.database().ref("scores");
+                  var user = window.sessionStorage.getItem("user");
+                  var subject = "English";
+                  window.sessionStorage.setItem("subject", "English");
+                  ref.once("value")
+                    .then(function(snapshot) {
+                      console.log(snapshot.val());
+                      ref.push({
+                            "user": user,
+                            "score": score,
+                            "Subject": subject,
+                          });
+                      window.location.href = 'score.html';    
+
+                    });              
+ 
           }); 
 
-        var ref = firebase.database().ref("scores");
-        var user = window.sessionStorage.getItem("user");
-        var subject = "English";
-        window.sessionStorage.setItem("subject", "English");
-        ref.once("value")
-          .then(function(snapshot) {
-            ref.push({
-                  "user": user,
-                  "score": score,
-                  "Subject": subject,
-                });
-
-          });
-      
-      
+        
+         
     }
+
 
     </script>
 
