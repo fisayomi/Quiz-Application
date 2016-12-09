@@ -11,9 +11,11 @@
 <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Fjalla+One" rel="stylesheet">
 
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
     <script>
       // Initialize Firebase
+      var questionLength;
       var config = {
         apiKey: "AIzaSyCKeQtsr3piRY1a2Z_SRnC9Mugoh13X7mc",
         authDomain: "quiz-application-76fd2.firebaseapp.com",
@@ -30,6 +32,7 @@
         var quest;
         var radioInput;
           var questAnswer = snapshot.val();
+          questionLength = questAnswer.length;
           for (var i = 0; i < questAnswer.length; i++) {
 
             for(var value in snapshot.val()[i]){
@@ -50,6 +53,7 @@
                  radioInput.setAttribute('name', index);
                  radioInput.setAttribute('value', value+index);
                  radioInput.setAttribute('id', value+index);
+                 radioLabel.setAttribute('for' , value+index);
                  radioLabel.innerHTML = snapshot.val()[i][value];
                 document.getElementById(quest).appendChild(document.createElement('br'));
                 document.getElementById(quest).appendChild(radioInput);
@@ -69,7 +73,7 @@
           document.getElementById(quest).appendChild(document.createElement('br'));
           document.getElementById(quest).appendChild(submit);
 
-           document.getElementById("la").innerHTML = "Choose the right answer to each question ";
+           document.getElementById("la").innerHTML = "Choose the right answer to each question and ensure you Submit at the end of the quiz";
           
       });
   </script>
@@ -116,39 +120,70 @@
     
 
     <script type="text/javascript">
-      function getSelectedValues(){
-          var ref = firebase.database().ref("answers2"); 
+      function getSelectedValues(e){
+       console.log(questionLength);
+        var arrayResult = [];
+        for(var i = 0; i< questionLength; i++){
+          if(document.getElementsByName(i.toString()).checked){
+            arrayResult.push(i)
+          }
+        }
+
+        
+        if(arrayResult.length != questionLength){
+          if(confirm("Are you sure you want to submit?")){
+            submitToFirebase();
+          }else{
+            return
+          }        
+        } else{
+          submitToFirebase();
+        }
+      
+    }
+
+    
+    function submitToFirebase(){
+
+      var ref = firebase.database().ref("answers2"); 
           var score = 0;          
           ref.once("value")
           .then(function(snapshot) {
               var snap = snapshot.val();
               var inc = 0;
+              var unchecked = false;
               console.log(snapshot.val());
               for (key in snap){
                 var result = document.getElementsByName(inc.toString());
+                // var arrayResult = [];
                 var trueAnswer = snap[key];
                 console.log(result);
                 var checkedRes;
                   for(var j = 0; j < result.length; j++){
                     if(result[j].checked){
-                      checkedRes = result[j].value 
-                      console.log(checkedRes);            
+                      checkedRes = result[j].value;
+                                
                     }
                   }
 
                   console.log(trueAnswer);
-                  if(checkedRes === trueAnswer){
+                  
+                    if(checkedRes === trueAnswer){
                     score++;
-                  } 
+                  }
+                        
                   inc++;
-
             }
-         
-            console.log(score);
-            window.sessionStorage.setItem("score", score);
-            document.getElementById('display2').innerHTML = "You scored " + score.toString();
-            window.location.href = 'score.html';
 
+               
+                  console.log(score);
+                  window.sessionStorage.setItem("score", score);
+                  document.getElementById('display2').innerHTML = "You scored " + score.toString();
+                  window.location.href = 'score.html';
+               
+
+         
+            
           }); 
 
         var ref = firebase.database().ref("scores");
@@ -164,7 +199,6 @@
                 });
 
           });
-      
     }
 
     </script>
